@@ -1,4 +1,4 @@
-# qb-minigame_pack
+# minigame_pack
 
 # Not my script, i did little modifications and some fixes 
 
