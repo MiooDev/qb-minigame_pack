@@ -1,0 +1,16 @@
+body{
+    background-color:transparent;
+}
+
+#canvas {
+    display: none;
+    position: absolute;
+    margin: 50px auto;
+    top: 65%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    overflow: visible;
+    height: 200ox;
+    width: 200px;
+    color:#822ff6
+}
