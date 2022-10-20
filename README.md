@@ -1,6 +1,6 @@
 # qb-minigame_pack
 
-# Not my script, i did little modification and some fixes 
+# Not my script, i did little modifications and some fixes 
 
 # qb-lock nopixel inspired with green and red box when success or failed
 ![qb-lock](https://user-images.githubusercontent.com/101432216/197069425-297d789a-9848-4faa-9981-9bde5ec3f554.png)
