@@ -5,9 +5,9 @@ AddEventHandler('open:minigame', function(callback)
     openHack()
 end)
 
-function OpenHackingGame(callback)
+function OpenHackingGame(puzzleDuration, puzzleLength, puzzleAmount, callback)
     Callbackk = callback
-    openHack()
+    openHack(puzzleDuration, puzzleLength, puzzleAmount)
 end
 
 RegisterNUICallback('callback', function(data, cb)
@@ -16,10 +16,13 @@ RegisterNUICallback('callback', function(data, cb)
     cb('ok')
 end)
 
-function openHack()
+function openHack(puzzleDuration, puzzleLength, puzzleAmount)
     SetNuiFocus(true, true)
     SendNUIMessage({
-        action = "open"
+        action = "open",
+        duration = puzzleDuration,
+        length = puzzleLength,
+        amount = puzzleAmount,
     })
     IsHacking = true
 end
@@ -33,8 +36,8 @@ function GetHackingStatus()
     return IsHacking
 end
 
-RegisterCommand("laptopgame",function()
-    exports['qb-laptopgame']:OpenHackingGame(20, 5, 5, function(Success)
+RegisterCommand('laptopgame', function()
+    exports['qb-laptopgame']:OpenHackingGame(20, 4, 2, function(Success)
         print(Success)
         if Success then
             print("1")
@@ -43,3 +46,18 @@ RegisterCommand("laptopgame",function()
         end
     end)
 end)
+
+
+-- Example 
+
+-- TIME = Time to failed
+-- SQUARE = Amount of square (4 minimum)
+-- AMOUNT = Amount of good answer to Success
+
+-- exports['qb-laptopgame']:OpenHackingGame(TIME, SQUARE, AMOUNT, function(Success)
+--     if Success then
+--         CODE HERE IF SUCCESS
+--     else
+--         CODE HERE IF FAILED
+--     end
+-- end)

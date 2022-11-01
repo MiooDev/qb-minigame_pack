@@ -4,13 +4,13 @@ import { $, delay, playSound } from './helpers.js'
 import { doPuzzle } from './puzzle-handler.js'
 
 // runs on site load and handles entire  flow
-async function start(){
+async function start(duration,puzzlelength,amount,dev){
 
     // reset from previous
     $('.try-again').classList.add('hidden')
     $('.spy-icon').src = 'assets/spy-icon.png'
 
-    const dialing = playSound('assets/dialing.mp3', 0.1)
+    playSound('assets/dialing.mp3', 0.1)
 
     // mock loading screen
     setInformationText('ESTABLISHING CONNECTION')
@@ -19,8 +19,6 @@ async function start(){
     await delay(1)
     setInformationText('ACCESS CODE FLAGGED; REQUIRES HUMAN CAPTCHA INPUT..')
     await delay(0.8)
-
-   
 
     // hide text and show squares
     $('#text-container').classList.toggle('hidden')
@@ -32,11 +30,11 @@ async function start(){
     let answer
     let result = true
 
-    for (let i = 0; i < 4 && result; i++) {
-        [submitted, answer] = await doPuzzle()
+    for (let i = 0; i < amount && result; i++) {
+        [submitted, answer] = await doPuzzle(duration,puzzlelength,dev)
         result = (submitted?.toLowerCase() == answer)
     }
-   
+
     // hide squares and show text
     $('.answer-section').classList.add('hidden')
     $('.number-container').classList.add('hidden')
@@ -46,8 +44,8 @@ async function start(){
     setInformationText((result) ? 'the system has been bypassed.' : "The system didn't accept your answers")
     
     if(!result) {
-    	$('.spy-icon').src = 'assets/failed.png'
-    	$('#answer-reveal').textContent = answer
+        $('.spy-icon').src = 'assets/failed.png'
+        $('#answer-reveal').textContent = answer
         await delay(5)
     }
 
@@ -61,7 +59,7 @@ async function start(){
 
     $(".bg").classList.add('hidden');
 
-    $('#submitted-reveal').textContent = (result) ? 'İyi iş başardın, gerçekten..' : ((submitted == null) ?  "Süre bitti," : `You wrote "${submitted || ' '}", the`)
+    $('#submitted-reveal').textContent = (result) ? 'You did a good job..' : ((submitted == null) ?  "Time's up," : `You wrote "${submitted || ' '}", the`)
 }
 
 
@@ -83,7 +81,7 @@ gtag('config', 'G-7E64QM2WXT');
 
 window.addEventListener('message', function(event){
     if (event.data.action == "open") {
-        start()
+        start(event.data.duration, event.data.length,event.data.amount, event.data.dev)
         $(".bg").classList.remove('hidden');
     }
 })

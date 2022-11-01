@@ -5,11 +5,11 @@ import { getPuzzleSvg } from './svg-factory.js'
 const progressBar = $('.answer-progress-bar')
 const inputElement = $('.answer-input')
 
-let puzzleTime = 7
-let puzzleAmount = 4
-
 // handles generating puzzle and returning result
-export async function doPuzzle(){
+export async function doPuzzle(duration, puzzleA,dev){
+    const puzzleTime = duration
+    const puzzleAmount = puzzleA
+
     // reset from previous run
     $('.answer-section').classList.add('hidden')
     $(".number-container").innerHTML = ''
@@ -51,7 +51,10 @@ export async function doPuzzle(){
     // generate and display question
     const [question, answer] = generateQuestionAndAnswer(nums, puzzles) 
     $('.answer-question').textContent = question.toUpperCase()
+    
+    // for learning purposes
     console.log(answer)
+
     return new Promise(async (resolve) => {
 
         // return written input and answer
